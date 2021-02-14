@@ -7047,7 +7047,7 @@ button:focus {
 
 @font-face {
 	font-family: clockicons;
-	src: url(/css/clockicons.svg) format('svg');
+	src: url(./css/clockicons.svg) format('svg');
 	font-weight: 400;
 	font-style: normal
 }
