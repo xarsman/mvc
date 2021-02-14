@@ -10,15 +10,14 @@
   <script src="https://code.jquery.com/jquery-3.0.0.min.js" type="text/javascript"></script>
 </head>
 <body style="color: white; background-color: black;">
-  <div>nog tezst</div>
   <div style="
     /* color: forestgreen; */
-    font-size: 28px;
+    font-size: 56px;
     position: fixed;
-    top: 60%;
+    top: 25%;
     left: 50%;
     transform: translate(-50%, -50%);
-  ">Gelieve nog even te wachten met je pakje te openen!</div>
+  ">Nog even wachten..</div>
   <div class="flip-container digit text-nowrap font-digit" style="
     color: forestgreen;
     font-size: 128px;
@@ -64,6 +63,7 @@
         $("#cds").text(("00" + s).slice(-2));
         if (h === 0 && m === 0 && s === 0) {
           $(".flip-container").addClass('hover')
+          return;
         }
       }
       requestAnimationFrame(timerLoop);

@@ -18464,13 +18464,10 @@ html[dir=rtl] .input-group-btn:not(:first-child)>.btn-group {
 
 
 
-.flip-container {
-	perspective: 1000px;
+/* flip the pane when hovered */
+.flip-container.hover .flipper {
+	transform: rotateX(180deg);
 }
-	/* flip the pane when hovered */
-	.flip-container.hover .flipper {
-		transform: rotateY(180deg);
-	}
 
 .flip-container, .front, .back {
 	width: 320px;
@@ -18481,14 +18478,13 @@ html[dir=rtl] .input-group-btn:not(:first-child)>.btn-group {
 .flipper {
 	transition: 0.6s;
 	transform-style: preserve-3d;
-
+    transform-origin: 100% 64px;
 	position: relative;
 }
 
 /* hide back of pane during swap */
 .front, .back {
 	backface-visibility: hidden;
-
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -18497,11 +18493,10 @@ html[dir=rtl] .input-group-btn:not(:first-child)>.btn-group {
 /* front pane, placed above back */
 .front {
 	z-index: 2;
-	/* for firefox 31 */
-	transform: rotateY(0deg);
+	transform: rotateX(0deg);
 }
 
 /* back, initially hidden pane */
 .back {
-	transform: rotateY(180deg);
+	transform: rotateX(180deg);
 }
