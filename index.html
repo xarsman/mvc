@@ -24,22 +24,22 @@
   <div class="colored digit text-nowrap font-digit countdowns"></div>
   <script>
     
-    var now = moment(); // new Date().getTime();
-    var then = moment().add(11117660, 'seconds'); // new Date(now + 60 * 1000);
+    var nowMoment = moment(); // new Date().getTime();
+    var thenMoment = moment().add(11117660, 'seconds'); // new Date(now + 60 * 1000);
 
-    $(".now").text(moment(now).format('h:mm:ss a'));
-    $(".then").text(moment(then).format('h:mm:ss a'));
-    $(".duration").text(moment(now).to(then));
-    var last = 0
-    (function timerLoop(animationStamp) {
+    $(".now").text(moment(nowMoment).format('h:mm:ss a'));
+    $(".then").text(moment(thenMoment).format('h:mm:ss a'));
+    $(".duration").text(moment(nowMoment).to(thenMoment));
+    var last = 0;
+    (function timerLoop(now) {
       // each seconds call update the DOM
-      if(!last || animationStamp - last >= 1*1000) {
-        last = animationStamp;
-        $(".difference").text(moment().to(then));
-        $(".countdown").text(countdown(then).toString());
-        $(".countdownh").text(countdown(then).hours.toString());
-        $(".countdownm").text(countdown(then).minutes.toString());
-        $(".countdowns").text(countdown(then).seconds.toString());
+      if(!last || now - last >= 1*1000) {
+        last = now;
+        $(".difference").text(moment().to(thenMoment));
+        $(".countdown").text(countdown(thenMoment).toString());
+        $(".countdownh").text(countdown(thenMoment).hours.toString());
+        $(".countdownm").text(countdown(thenMoment).minutes.toString());
+        $(".countdowns").text(countdown(thenMoment).seconds.toString());
       }
       requestAnimationFrame(timerLoop);
     })();
