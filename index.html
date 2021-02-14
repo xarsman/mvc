@@ -19,7 +19,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
   ">Gelieve nog even te wachten met je pakje te openen!</div>
-  <div class="digit text-nowrap font-digit  wrapper" style="
+  <div class="flip-container digit text-nowrap font-digit" style="
     color: forestgreen;
     font-size: 128px;
     position: fixed;
@@ -27,10 +27,17 @@
     left: 50%;
     transform: translate(-50%, -50%);
   ">
-    <span id="cdh">0</span>:<span id="cdm">00</span>:<span id="cds">00</span>
-    <span id="cdht" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 344px;">uren</span>
-    <span id="cdmt" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 172px;">minuten</span>
-    <span id="cdst" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 0px;">seconden</span>
+    <div class="flipper">
+      <div class="front">
+        <span id="cdh">0</span>:<span id="cdm">00</span>:<span id="cds">00</span>
+        <span id="cdht" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 344px;">uren</span>
+        <span id="cdmt" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 172px;">minuten</span>
+        <span id="cdst" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 0px;">seconden</span>
+      </div>
+      <div class="back">
+        <span>ENTER</span>
+      </div>
+    </div>
   </div>
   <div class="font-digit-text" style="
     /* color: forestgreen; */
@@ -39,10 +46,10 @@
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
-  ">13 MAART 2021 - 14:00</div>
+  ">13 MAART 2021 - 14:05</div>
   <script>
     var nowMoment = moment();
-    var thenMoment = moment('2021-03-13T14:00');
+    var thenMoment = moment('2021-03-13T14:05');
     var last = 0;
     (function timerLoop(now) {
       // each seconds call update the DOM
@@ -50,9 +57,14 @@
         last = now;
         var cd = countdown(thenMoment);
         var h = cd.days ? cd.days*24 + cd.hours : cd.hours;
+        var m = cd.minutes;
+        var s = cd.seconds;
         $("#cdh").text(h ? h : "0");
-        $("#cdm").text(("00" + cd.minutes).slice(-2));
-        $("#cds").text(("00" + cd.seconds).slice(-2));
+        $("#cdm").text(("00" + m).slice(-2));
+        $("#cds").text(("00" + s).slice(-2));
+        if (h === 0 && m === 0 && s === 0) {
+          $(".flip-container").addClass('hover')
+        }
       }
       requestAnimationFrame(timerLoop);
     })();
