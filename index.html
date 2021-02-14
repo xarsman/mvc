@@ -20,7 +20,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 ">
-    <span id="cdh"></span>:<span id="cdm"></span>:<span id="cds"></span>
+    <span id="cdh">0</span>:<span id="cdm">00</span>:<span id="cds">00</span>
     <span id="cdht" style="font-size: 18px; position: absolute; top: 146px; right: 500px;">uren</span>
     <span id="cdmt" style="font-size: 18px; position: absolute; top: 146px; right: 256px;">minuten</span>
     <span id="cdst" style="font-size: 18px; position: absolute; top: 146px; right: 0px;">seconden</span>
@@ -35,7 +35,7 @@
       if(!last || now - last >= 1*1000) {
         last = now;
         var cd = countdown(thenMoment);
-        var h = cd.days ? cd.days*24 + cd.hours;
+        var h = cd.days ? cd.days*24 + cd.hours : cd.hours;
         $("#cdh").text(h ? h : "0");
         $("#cdm").text(("00" + cd.minutes).slice(-2));
         $("#cds").text(("00" + cd.seconds).slice(-2));
