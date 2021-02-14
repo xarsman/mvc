@@ -26,33 +26,14 @@
     left: 50%;
     transform: translate(-50%, -50%);
   ">
-    <div class="flipper" style="
-      transition: 0.6s;
-      transform-style: preserve-3d;
-      position: relative;
-      height: 128px;
-    ">
-      <div class="front" style="
-        backface-visibility: hidden;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 128px; 
-        transform: translate(-50%, -50%) rotateX(0deg)
-      ">
+    <div class="flipper">
+      <div class="front">
         <span id="cdh">0</span>:<span id="cdm">00</span>:<span id="cds">00</span>
         <span id="cdht" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 344px;">uren</span>
         <span id="cdmt" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 172px;">minuten</span>
         <span id="cdst" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 0px;">seconden</span>
       </div>
-      <div class="back" style="
-        backface-visibility: hidden;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 128px; 
-        transform: translate(-50%, -50%) rotateX(180deg);
-      ">
+      <div class="back enter">
         <span>ENTER</span>
       </div>
     </div>
@@ -81,9 +62,7 @@
         $("#cdm").text(("00" + m).slice(-2));
         $("#cds").text(("00" + s).slice(-2));
         if (h === 0 && m === 0 && s === 0) {
-          var css = $(".flip-container").css("transform");
-          css = css+" rotateX(180deg)";
-          $('.flip-container').css('transform',css);
+          $(".flip-container").addClass('hover')
           return;
         }
       }

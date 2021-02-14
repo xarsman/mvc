@@ -18458,3 +18458,40 @@ html[dir=rtl] .input-group-btn:not(:first-child)>.btn-group {
 .dark-theme .tooltip.bottom .tooltip-arrow {
 	border-bottom-color: #fff
 }
+
+
+
+/* flip the pane when hovered */
+.flip-container.hover .flipper {
+	transform: translate(-50%, -50%) rotateX(180deg);
+}
+
+.flip-container, .front, .back {
+	height: 128px;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	transform: translate(-50%, -50%) rotateX(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: translate(-50%, -50%) rotateX(180deg);
+}
