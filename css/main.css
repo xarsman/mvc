@@ -18470,8 +18470,8 @@ html[dir=rtl] .input-group-btn:not(:first-child)>.btn-group {
 }
 
 .flip-container, .front, .back {
-	width: 320px;
-	height: 480px;
+	width: 415px;
+	height: 128px;
 }
 
 /* flip speed goes here */
