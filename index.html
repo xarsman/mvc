@@ -23,18 +23,24 @@
   <div class="font-digit countdownm"></div>
   <div class="colored digit text-nowrap font-digit countdowns"></div>
   <script>
+    
     var now = moment(); // new Date().getTime();
     var then = moment().add(11117660, 'seconds'); // new Date(now + 60 * 1000);
 
     $(".now").text(moment(now).format('h:mm:ss a'));
     $(".then").text(moment(then).format('h:mm:ss a'));
     $(".duration").text(moment(now).to(then));
-    (function timerLoop() {
-      $(".difference").text(moment().to(then));
-      $(".countdown").text(countdown(then).toString());
-      $(".countdownh").text(countdown(then).hours.toString());
-      $(".countdownm").text(countdown(then).minutes.toString());
-      $(".countdowns").text(countdown(then).seconds.toString());
+    var last = 0
+    (function timerLoop(animationStamp) {
+      // each seconds call update the DOM
+      if(!last || animationStamp - last >= 1*1000) {
+        last = animationStamp;
+        $(".difference").text(moment().to(then));
+        $(".countdown").text(countdown(then).toString());
+        $(".countdownh").text(countdown(then).hours.toString());
+        $(".countdownm").text(countdown(then).minutes.toString());
+        $(".countdowns").text(countdown(then).seconds.toString());
+      }
       requestAnimationFrame(timerLoop);
     })();
   </script>
