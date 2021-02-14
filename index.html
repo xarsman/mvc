@@ -9,26 +9,40 @@
   <script src="https://cdn.rawgit.com/mckamey/countdownjs/master/countdown.min.js" type="text/javascript"></script>
   <script src="https://code.jquery.com/jquery-3.0.0.min.js" type="text/javascript"></script>
 </head>
-<body style="background-color: black;">
-  <h1>Too early</h1>
-  <div>Gelieve nog even te wachten met je pakje te openen!</div>
+<body style="color: white; background-color: black;">
   <div>nog tezst</div>
-  <div class="colored digit text-nowrap font-digit  wrapper" style="color: #FF9500;
+  <div style="
+    /* color: forestgreen; */
+    font-size: 28px;
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  ">Gelieve nog even te wachten met je pakje te openen!</div>
+  <div class="digit text-nowrap font-digit  wrapper" style="
+    color: forestgreen;
     font-size: 128px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-">
+  ">
     <span id="cdh">0</span>:<span id="cdm">00</span>:<span id="cds">00</span>
-    <span id="cdht" style="font-size: 18px; position: absolute; top: 146px; right: 500px;">uren</span>
-    <span id="cdmt" style="font-size: 18px; position: absolute; top: 146px; right: 256px;">minuten</span>
-    <span id="cdst" style="font-size: 18px; position: absolute; top: 146px; right: 0px;">seconden</span>
+    <span id="cdht" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 344px;">uren</span>
+    <span id="cdmt" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 172px;">minuten</span>
+    <span id="cdst" class="font-digit-text" style="font-size: 18px; position: absolute; top: 146px; right: 0px;">seconden</span>
   </div>
-  <div>tot 13 maart 14u</div>
+  <div class="font-digit-text" style="
+    /* color: forestgreen; */
+    font-size: 28px;
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  ">13 MAART 2021 - 14:00</div>
   <script>
     var nowMoment = moment();
-    var thenMoment = moment('2021-03-13T14:05');
+    var thenMoment = moment('2021-03-13T14:00');
     var last = 0;
     (function timerLoop(now) {
       // each seconds call update the DOM
