@@ -7047,7 +7047,7 @@ button:focus {
 
 @font-face {
 	font-family: clockicons;
-	src: url(./font/clockicons/clockicons.eot#iefix) format('embedded-opentype'), url(./font/clockicons/clockicons.woff2) format('woff2'), url(./font/clockicons/clockicons.woff) format('woff'), url(./font/clockicons/clockicons.ttf) format('truetype'), url(./font/clockicons/clockicons.svg) format('svg');
+	src: url(../font/clockicons/clockicons.eot#iefix) format('embedded-opentype'), url(../font/clockicons/clockicons.woff2) format('woff2'), url(../font/clockicons/clockicons.woff) format('woff'), url(../font/clockicons/clockicons.ttf) format('truetype'), url(../font/clockicons/clockicons.svg) format('svg');
 	font-weight: 400;
 	font-style: normal
 }
@@ -7459,7 +7459,7 @@ button:focus {
 
 @font-face {
 	font-family: VPSSonLaHoa;
-	src: url(./font/vps-solaho/vpssolah.woff2) format("woff2"), url(./font/vps-solaho/vpssolah.eot) format("eot"), url(./font/vps-solaho/vpssolah.woff) format("woff"), url(./font/vps-solaho/vpssolah.ttf) format("truetype"), url(./font/vps-solaho/vpssolah.svg) format("svg");
+	src: url(../font/vps-solaho/vpssolah.woff2) format("woff2"), url(../font/vps-solaho/vpssolah.eot) format("eot"), url(../font/vps-solaho/vpssolah.woff) format("woff"), url(../font/vps-solaho/vpssolah.ttf) format("truetype"), url(../font/vps-solaho/vpssolah.svg) format("svg");
 	font-weight: 400;
 	font-style: normal
 }
