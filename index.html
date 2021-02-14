@@ -9,40 +9,39 @@
   <script src="https://cdn.rawgit.com/mckamey/countdownjs/master/countdown.min.js" type="text/javascript"></script>
   <script src="https://code.jquery.com/jquery-3.0.0.min.js" type="text/javascript"></script>
 </head>
-<body>
-  
-  <!-- CSS only -->
-
-  <h1>Just Seconds</h1>
-  <div>
-    The time is now: <span class="now"></span>, a timer will go off <span class="duration"></span> at <span class="then"></span>
+<body style="background-color: black;">
+  <h1>Too early</h1>
+  <div>Gelieve nog even te wachten met je pakje te openen!</div>
+  <div class="colored digit text-nowrap font-digit  wrapper" style="color: #FF9500;
+    font-size: 128px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+">
+    <span>nog tezst</span>
+    <span id="cdh"></span>:<span id="cdm"></span>:<span id="cds"></span>
+    <span id="cdht">uren</span><span id="cdmt">minuten</span><span id="cdst">seconden</span>
+    <span>tot 13 maart 14u</span>
   </div>
-  <div>The timer is set to go off <span class="difference"></span></div>
-  <div class="countdown"></div>
-  <div class="font-digit countdownh"></div>
-  <div class="font-digit countdownm"></div>
-  <div class="colored digit text-nowrap font-digit countdowns"></div>
   <script>
-    
-    var nowMoment = moment(); // new Date().getTime();
-    var thenMoment = moment().add(11117660, 'seconds'); // new Date(now + 60 * 1000);
-
-    $(".now").text(moment(nowMoment).format('h:mm:ss a'));
-    $(".then").text(moment(thenMoment).format('h:mm:ss a'));
-    $(".duration").text(moment(nowMoment).to(thenMoment));
+    var nowMoment = moment();
+    var thenMoment = moment('2021-03-13T14:05');
     var last = 0;
     (function timerLoop(now) {
       // each seconds call update the DOM
       if(!last || now - last >= 1*1000) {
         last = now;
-        $(".difference").text(moment().to(thenMoment));
-        $(".countdown").text(countdown(thenMoment).toString());
-        $(".countdownh").text(countdown(thenMoment).hours.toString());
-        $(".countdownm").text(countdown(thenMoment).minutes.toString());
-        $(".countdowns").text(countdown(thenMoment).seconds.toString());
+        var cd = countdown(thenMoment);
+        $("#cdh").text(cd.hours ? cd.hours : "0");
+        $("#cdm").text(("00" + cd.minutes).slice(-3));
+        $("#cds").text(("00" + cd.seconds).slice(-3));
       }
       requestAnimationFrame(timerLoop);
     })();
   </script>
 </body>
 </html>
+
+
+("00" + h).slice (-3);
