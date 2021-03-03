@@ -5,46 +5,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
   <title i18n-content="title"></title>
   <link rel="stylesheet" href="css/main.css">
-  <script src="moment.min.js" type="text/javascript"></script>
-  <script src="countdown.min.js" type="text/javascript"></script>
-  <script src="jquery-3.0.0.min.js" type="text/javascript"></script>
+  <script src="js/moment.min.js" type="text/javascript"></script>
+  <script src="js/countdown.min.js" type="text/javascript"></script>
+  <script src="js/jquery-3.0.0.min.js" type="text/javascript"></script>
 </head>
 <body style="color: white; background-color: black;">
-  <div style="
-    position: fixed;
-    transform: translate(-50%, -50%);
-    font-size: min(5vw,5vh);
-    top: 15vh;
-    left: 50vw;
-  ">Nog even wachten..</div>
-  <div class="flip-container digit text-nowrap font-digit" style="
-    color: forestgreen;
-    position: fixed;
-    transform: translate(-50%, -50%);
-    font-size: min(15vw,15vh);
-    top: 50vh;
-    left: 50vw;
-  ">
-    <div class="flipper">
-      <div class="front">
-        <span id="cdh">0</span>:<span id="cdm">00</span>:<span id="cds">00</span>
-        <span id="cdht" class="font-digit-text" style="font-size: min(3vw,3vh); position: absolute; top: min(18vw,18vh); right: min(41vw,41vh);">uren</span>
-        <span id="cdmt" class="font-digit-text" style="font-size: min(3vw,3vh); position: absolute; top: min(18vw,18vh); right: min(21vw,21vh);">minuten</span>
-        <span id="cdst" class="font-digit-text" style="font-size: min(3vw,3vh); position: absolute; top: min(18vw,18vh); right: min(1vw,1vh);">seconden</span>
-      </div>
-      <div class="back enter">
-        <span>ENTER</span>
+  <div id="templateHook"></div>
+  <template id="timer-template">
+    <div style="
+      position: fixed;
+      transform: translate(-50%, -50%);
+      font-size: min(5vw,5vh);
+      top: 15vh;
+      left: 50vw;
+    ">Nog even wachten..</div>
+    <div class="flip-container digit text-nowrap font-digit" style="
+      color: forestgreen;
+      position: fixed;
+      transform: translate(-50%, -50%);
+      font-size: min(15vw,15vh);
+      top: 50vh;
+      left: 50vw;
+    ">
+      <div class="flipper">
+        <div class="front">
+          <span id="cdh">0</span>:<span id="cdm">00</span>:<span id="cds">00</span>
+          <span id="cdht" class="font-digit-text" style="font-size: min(3vw,3vh); position: absolute; top: min(18vw,18vh); right: min(41vw,41vh);">uren</span>
+          <span id="cdmt" class="font-digit-text" style="font-size: min(3vw,3vh); position: absolute; top: min(18vw,18vh); right: min(21vw,21vh);">minuten</span>
+          <span id="cdst" class="font-digit-text" style="font-size: min(3vw,3vh); position: absolute; top: min(18vw,18vh); right: min(1vw,1vh);">seconden</span>
+        </div>
+        <div class="back enter" onclick="viewTheGoodies()" style="
+          cursor: pointer;
+        ">
+          <span>ENTER</span>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="font-digit-text" style="
-    position: fixed;
-    transform: translate(-50%, -50%);
-    font-size: 4vw;
-    top: min(70vw,70vh);
-    left: 50vw;
-  ">13 MAART 2021 - 14:05</div>
+    <div class="font-digit-text" style="
+      position: fixed;
+      transform: translate(-50%, -50%);
+      font-size: min(4vw,4vh);
+      top: 70vh;
+      left: 50vw;
+    ">13 MAART 2021 - 14:05</div>
+  </template>
+  <template id="goodies-template">
+    <a href="#" class="list-group-item">
+      <div class="image">
+        <img src="picture/placeholder.png" />
+      </div>
+      <p class="list-group-item-text"></p>
+    </a>
+  </template>
   <script>
+    var timerTemplate = $('#timer-template').html();
+    $('#templateHook').append(timerTemplate);
+    function viewTheGoodies() {
+      var template = $('#goodies-template').html();
+      $('#templateHook').append(template);
+    }
+    function hideTheGoodies() {
+      $('#templateHook').append(timerTemplate);
+    }
     var nowMoment = moment();
     var thenMoment = moment('2021-03-13T14:05');
     var last = 0;
