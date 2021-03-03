@@ -18461,13 +18461,14 @@ html[dir=rtl] .input-group-btn:not(:first-child)>.btn-group {
 
 
 
+
 /* flip the pane when hovered */
 .flip-container.hover .flipper {
 	transform: translate(-50%, -50%) rotateX(180deg);
 }
 
 .flip-container, .front, .back {
-	height: 128px;
+	height: min(15vw,15vh);
 }
 
 /* flip speed goes here */
