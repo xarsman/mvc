@@ -14,6 +14,23 @@ body {
   letter-spacing: -.1em
 }
 
+.normal-pic {
+  height: 100%;
+  max-height: 80vh;
+  width: 100%;
+  max-width: 80vw;
+  cursor: zoom-in;
+}
+
+.zoomed-pic {
+  z-index: 10;
+  height: unset;
+  max-height: unset;
+  width: unset;
+  max-width: unset;
+  cursor: zoom-out;
+}
+
 /***************/
 /* flip effect */
 /***************/

@@ -66,18 +66,13 @@
       "></h1>
       <p></p>
     </div>
-    <div class="image" style="
+    <div onclick="zoomPicture()" style="
         position: fixed;
         transform: translate(-50%, -50%);
         top: 50vh;
         left: 50vw;
       ">
-      <img src="picture/thegoodies.jpg" style="
-        height: 100%;
-        max-height: 80vh;
-        width: 100%;
-        max-width: 80vw;
-      "/>
+      <img id="zoomable" src="picture/thegoodies.jpg" class="normal-pic"/>
     </div>
   </template>
   <script>
@@ -94,11 +89,22 @@
         setTimeout(typeWriter("Nog even wachten.."), 10*1000);
       }
     };
+    document.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        viewTheGoodies();
+      }
+    });
+    function zoomPicture() {
+       $("#zoomable").toggleClass('zoomed-pic');
+    }
     function viewTheGoodies() {
-      var template = $('#goodies-template').html();
-      $('#templateHook').html(template);
-      $("body").css({"color": "black", "background-color": "white"});
-      setTimeout(typeWriter("Wij zijn getrouwd!|Drink er eentje op."), 3*1000);
+      var cd = countdown(thenMoment);
+      if (cd.value > 0) {
+        var template = $('#goodies-template').html();
+        $('#templateHook').html(template);
+        $("body").css({"color": "black", "background-color": "white"});
+        setTimeout(typeWriter("Wij zijn getrouwd!|Drink er eentje op."), 3*1000);
+      }
     }
     function hideTheGoodies() {
       $('#templateHook').html(timerTemplate);
