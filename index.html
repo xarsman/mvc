@@ -24,6 +24,7 @@
     <div class="output" id="output">
       <h1 class="cursor" style="
         font-size: min(5vw,5vh);
+        font-weight: normal;
       "></h1>
       <p></p>
     </div>
@@ -61,6 +62,7 @@
     <div class="output" id="output">
       <h1 class="cursor" style="
         font-size: min(5vw,5vh);
+        font-weight: normal;
       "></h1>
       <p></p>
     </div>
@@ -94,7 +96,7 @@
       var template = $('#goodies-template').html();
       $('#templateHook').html(template);
       $("body").css({"color": "black", "background-color": "white"});
-      typeWriter("Wij zijn getrouwd!|Drink er eentje op.")
+      setTimeout(typeWriter("Wij zijn getrouwd!|Drink er eentje op."), 3*1000);
     }
     function hideTheGoodies() {
       $('#templateHook').html(timerTemplate);
@@ -117,11 +119,11 @@
         $("#cdh").text(h ? h : "0");
         $("#cdm").text(("00" + m).slice(-2));
         $("#cds").text(("00" + s).slice(-2));
-        if (h === 0 && m === 0 && s === 20) {
+        if (h === 0 && m === 0 && s === 6) {
           typeWriterClear()
         }
-        else if (h === 0 && m === 0 && s === 5) {
-          typeWriter("Klik op ENTER")
+        else if (h === 0 && m === 0 && s === 2) {
+          typeWriter("Klik op ENTER.")
         }
         if (h === 0 && m === 0 && s === 0) {
           $(".flip-container").addClass('hover')
