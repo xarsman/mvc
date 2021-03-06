@@ -88,7 +88,9 @@
       var h = cd.days ? cd.days*24 + cd.hours : cd.hours;
       var m = cd.minutes;
       var s = cd.seconds;
-      if (!(h === 0 && m === 0 && s < 30)) {
+      if (cd.value > 0 || (h === 0 && m === 0 && s === 0)) {
+        setTimeout(typeWriter("Klik op ENTER."), 1*1000);
+      } else if (!(h === 0 && m === 0 && s < 20)) {
         setTimeout(typeWriter("Nog even wachten.."), 10*1000);
       }
     };
@@ -119,15 +121,14 @@
         $("#cdh").text(h ? h : "0");
         $("#cdm").text(("00" + m).slice(-2));
         $("#cds").text(("00" + s).slice(-2));
-        if (h === 0 && m === 0 && s === 6) {
+        if (cd.value > 0 || (h === 0 && m === 0 && s === 0)) {
+          $(".flip-container").addClass('hover')
+          return;
+        } else if (h === 0 && m === 0 && s === 6) {
           typeWriterClear()
         }
         else if (h === 0 && m === 0 && s === 2) {
           typeWriter("Klik op ENTER.")
-        }
-        if (h === 0 && m === 0 && s === 0) {
-          $(".flip-container").addClass('hover')
-          return;
         }
       }
       requestAnimationFrame(timerLoop);
