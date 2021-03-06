@@ -82,8 +82,8 @@ body {
   animation-iteration-count: infinite;
 }
 h1.cursor::after {
-  height:24px;
-  width:13px;
+  height: min(3.75vw,3.75vh);
+  width: min(2.5vw,2.5vh);
 }
 p.cursor::after {
   height:13px;
