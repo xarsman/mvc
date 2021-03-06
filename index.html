@@ -52,7 +52,7 @@
     <div class="" style="
       position: fixed;
       transform: translate(-50%, -50%);
-      font-size: min(4vw,4vh);
+      font-size: min(3.5vw,3.5vh);
       top: 70vh;
       left: 50vw;
     ">13 MAART 2021 - 14:05</div>
@@ -117,11 +117,11 @@
         $("#cdh").text(h ? h : "0");
         $("#cdm").text(("00" + m).slice(-2));
         $("#cds").text(("00" + s).slice(-2));
-        if (h === 0 && m === 0 && s === 30) {
+        if (h === 0 && m === 0 && s === 20) {
           typeWriterClear()
         }
-        else if (h === 0 && m === 0 && s === 15) {
-          typeWriter("Klik ENTER")
+        else if (h === 0 && m === 0 && s === 5) {
+          typeWriter("Klik op ENTER")
         }
         if (h === 0 && m === 0 && s === 0) {
           $(".flip-container").addClass('hover')
@@ -134,12 +134,10 @@
       // values to keep track of the number of letters typed, which quote to use. etc. Don't change these values.
       var i = 0,
           a = 0,
-          isBackspacing = false,
           isParagraph = false,
           speedForward = 100, //Typing Speed
           speedWait = 1000, // Wait between typing and backspacing
           speedBetweenLines = 1000, //Wait between first and second lines
-          speedBackspace = 25, //Backspace Speed
           element = $("#output"),
           eHeader = element.children("h1"), //Header element
           eParagraph = element.children("p"); //Subheader element
@@ -172,7 +170,10 @@
       }
     }
     function typeWriterClear() {
-      var element = $("#output");
+      var speedBackspace = 25, //Backspace Speed
+          element = $("#output"),
+          eHeader = element.children("h1"), //Header element
+          eParagraph = element.children("p"); //Subheader element
       // If either the header or the paragraph still has text, continue backspacing
       if (eHeader.text().length > 0 || eParagraph.text().length > 0) {
         // If paragraph still has text, continue erasing, otherwise switch to the header.
