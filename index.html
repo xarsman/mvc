@@ -4,202 +4,414 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10.0, minimum-scale=.25, user-scalable=yes">
   <title i18n-content="title"></title>
-  <link rel="stylesheet" href="css/fontfaces.css">
-  <link rel="stylesheet" href="css/main.css">
-  <script src="js/moment.min.js" type="text/javascript"></script>
-  <script src="js/countdown.min.js" type="text/javascript"></script>
-  <script src="js/jquery-3.0.0.min.js" type="text/javascript"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --primary-gradient: linear-gradient(135deg, #5D5FEF, #843CF6);
+        --primary-gradient-hover: linear-gradient(135deg, #843CF6, #5D5FEF);
+        --secondary-gradient: linear-gradient(135deg, #1DB954, #21E065);
+        --background-dark: #121212;
+        --text-light: #F5F5F7;
+        --text-secondary: #B3B3B3;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: var(--background-dark);
+        color: var(--text-light);
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 650px;
+        width: 100%;
+        padding: 30px;
+        border-radius: 20px;
+        background: rgba(30, 30, 30, 0.9);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .track-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .track-info {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .album-art {
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+        object-fit: cover;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        flex-shrink: 0;
+    }
+
+    .track-details {
+        flex-grow: 1;
+    }
+
+    .track-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .artist {
+        font-size: 16px;
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+    }
+
+    .track-meta {
+        display: flex;
+        gap: 15px;
+        color: var(--text-secondary);
+        font-size: 14px;
+    }
+
+    .download-container {
+        width: 100%;
+    }
+
+    .section-title {
+        margin-bottom: 15px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .download-button {
+        position: relative;
+        width: 100%;
+        padding: 16px 24px;
+        border-radius: 12px;
+        background: var(--primary-gradient);
+        border: none;
+        color: white;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        z-index: 1;
+        box-shadow: 0 5px 15px rgba(93, 95, 239, 0.3);
+    }
+
+    .download-button:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--primary-gradient-hover);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+    }
+
+    .download-button:hover:before {
+        opacity: 1;
+    }
+
+    .download-button:hover .download-icon {
+        transform: translateY(2px);
+    }
+
+    .download-button:hover {
+        box-shadow: 0 8px 20px rgba(93, 95, 239, 0.5);
+    }
+
+    .download-button.is-downloaded {
+        background: var(--secondary-gradient);
+        box-shadow: 0 5px 15px rgba(29, 185, 84, 0.3);
+    }
+
+    .download-icon {
+        width: 20px;
+        height: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .download-icon svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .download-icon .arrow {
+        transition: fill 0.3s ease;
+    }
+
+    .download-button:hover .download-icon .arrow {
+        fill: #ffffff;
+    }
+
+    .download-status {
+        position: absolute;
+        bottom: -30px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        color: var(--text-secondary);
+        opacity: 0;
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+    }
+
+    .download-status.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .pulse {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+        border-radius: 12px;
+        transform: scale(0.9);
+        opacity: 0;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    .progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        width: 0%;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 0 0 0 12px;
+        transition: width 0.2s linear;
+    }
+
+    .quality-selector {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .quality-option {
+        padding: 8px 15px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-secondary);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .quality-option.active {
+        background: rgba(93, 95, 239, 0.2);
+        color: var(--text-light);
+    }
+
+    .quality-option:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(0.9);
+            opacity: 0;
+        }
+        50% {
+            opacity: 0.3;
+        }
+        100% {
+            transform: scale(1.1);
+            opacity: 0;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            padding: 20px;
+        }
+
+        .track-info {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .album-art {
+            width: 80px;
+            height: 80px;
+        }
+
+        .track-title {
+            font-size: 20px;
+        }
+
+        .track-meta {
+            justify-content: center;
+        }
+    }
+  </style>
 </head>
-<body style="
-  cursor: default; 
-  color: white; 
-  background-color: black;
-  -webkit-user-select: none; /* Safari */        
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
-">
-  <div id="templateHook"></div>
-  <template id="timer-template">
-    <div class="output" id="output">
-      <h1 class="cursor" style="
-        font-size: min(5vw,5vh);
-        font-weight: normal;
-      "></h1>
-      <p></p>
-    </div>
-    <div class="flip-container digit text-nowrap font-digit" style="
-      color: forestgreen;
-      position: fixed;
-      transform: translate(-50%, -50%);
-      font-size: min(15vw,15vh);
-      top: 50vh;
-      left: 50vw;
-    ">
-      <div class="flipper">
-        <div class="front">
-          <span id="cdh">0</span>:<span id="cdm">00</span>:<span id="cds">00</span>
-          <span id="cdht" class="font-digit-text" style="font-size: min(3vw,3vh); position: absolute; top: min(18vw,18vh); right: min(41vw,41vh);">uren</span>
-          <span id="cdmt" class="font-digit-text" style="font-size: min(3vw,3vh); position: absolute; top: min(18vw,18vh); right: min(21vw,21vh);">minuten</span>
-          <span id="cdst" class="font-digit-text" style="font-size: min(3vw,3vh); position: absolute; top: min(18vw,18vh); right: min(1vw,1vh);">seconden</span>
-        </div>
-        <div class="back enter" onclick="viewTheGoodies()" style="
-          cursor: pointer;
-        ">
-          <span>ENTER</span>
+<body>
+  <div class="container">
+    <div class="track-container">
+      <div class="track-info">
+        <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c6a?q=80&w=200&auto=format&fit=crop" alt="Album art" class="album-art">
+        <div class="track-details">
+          <h1 class="track-title">Progeny</h1>
+          <p class="artist">Legendary Bird</p>
+          <div class="track-meta">
+            <span>0:31</span>
+            <span>•</span>
+            <span>Album: Gold</span>
+          </div>
         </div>
       </div>
+      <div class="download-container">
+        <h2 class="section-title">Download for offline listening</h2>
+        <div class="quality-selector">
+          <div class="quality-option" data-quality="ultra">Ultra HD</div>
+        </div>
+        <button class="download-button">
+          <div class="pulse"></div>
+          <div class="progress-bar"></div>
+          <span class="download-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 17V3" class="arrow" fill="transparent"/>
+                <path d="M6 11l6 6 6-6" class="arrow" fill="transparent"/>
+                <path d="M3 21h18"/>
+            </svg>
+            <a href="picture/riddle_reverse.wav" download></a>
+          </span>
+          <span class="button-text">Download Track</span>
+        </button>
+        <div class="download-status">Starting download...</div>
+      </div>
     </div>
-    <div class="" style="
-      position: fixed;
-      transform: translate(-50%, -50%);
-      font-size: min(3.5vw,3.5vh);
-      top: 70vh;
-      left: 50vw;
-    ">13 MAART 2021 - 14:10</div>
-  </template>
-  <template id="goodies-template">
-    <div class="output" id="output">
-      <h1 class="cursor" style="
-        font-size: min(5vw,5vh);
-        font-weight: normal;
-      "></h1>
-      <p></p>
-    </div>
-    <div id="goodieswrapper" onclick="zoomPicture()" style="
-        position: absolute;
-        transform: translate(-50%, -50%);
-        top: 50vh;
-        left: 50vw;
-      ">
-      <img id="zoomable" src="picture/thegoodies.jpg" class="normal-pic"/>
-    </div>
-    <audio controls autoplay loop hidden>
-        <source src="picture/Netsky Hybrid Minds - Let Me Hold You Lyrics.mp3" type="audio/mpeg">
-    </audio>
-  </template>
+  </div>
   <script>
-    var timerTemplate = $('#timer-template').html();
-    hideTheGoodies();
-    window.onload = function(){
-      var cd = countdown(thenMoment);
-      var h = cd.days ? cd.days*24 + cd.hours : cd.hours;
-      var m = cd.minutes;
-      var s = cd.seconds;
-      if (cd.value > 0 || (h === 0 && m === 0 && s === 0)) {
-        setTimeout(typeWriter("Klik op ENTER."), 1*1000);
-      } else if (!(h === 0 && m === 0 && s < 20)) {
-        setTimeout(typeWriter("Nog even wachten.."), 10*1000);
-      }
-    };
-    document.addEventListener("keyup", function(event) {
-      if (event.keyCode === 13) {
-        viewTheGoodies();
-      }
-    });
-    function zoomPicture() {
-       $("#zoomable").toggleClass('zoomed-pic');
-       $("#goodieswrapper").toggleClass('zoomed-pic-wrapper');
-    }
-    function viewTheGoodies() {
-      var cd = countdown(thenMoment);
-      if (cd.value > 0) {
-        var template = $('#goodies-template').html();
-        $('#templateHook').html(template);
-        $("body").css({"color": "black", "background-color": "white"});
-        setTimeout(typeWriter("Wij zijn getrouwd!|Drink er eentje op."), 3*1000);
-      }
-    }
-    function hideTheGoodies() {
-      $('#templateHook').html(timerTemplate);
-      $("body").css({"color": "white", "background-color": "black"});
-    }
-    function toggleFlip() {
-      $(".flip-container").toggleClass('hover');
-    }
-    var nowMoment = moment();
-    var thenMoment = moment('2021-03-13T14:10');    
-    var last = 0;
-    (function timerLoop(now) {
-      // each seconds call update the DOM
-      if(!last || now - last >= 1*1000) {
-        last = now;
-        var cd = countdown(thenMoment);
-        var h = cd.days ? cd.days*24 + cd.hours : cd.hours;
-        var m = cd.minutes;
-        var s = cd.seconds;
-        $("#cdh").text(h ? h : "0");
-        $("#cdm").text(("00" + m).slice(-2));
-        $("#cds").text(("00" + s).slice(-2));
-        if (cd.value > 0 || (h === 0 && m === 0 && s === 0)) {
-          $(".flip-container").addClass('hover')
-          return;
-        } else if (h === 0 && m === 0 && s === 6) {
-          typeWriterClear()
-        }
-        else if (h === 0 && m === 0 && s === 2) {
-          typeWriter("Klik op ENTER.")
-        }
-      }
-      requestAnimationFrame(timerLoop);
-    })();
-    function typeWriter(targetString) {
-      // values to keep track of the number of letters typed, which quote to use. etc. Don't change these values.
-      var i = 0,
-          a = 0,
-          isParagraph = false,
-          speedForward = 100, //Typing Speed
-          speedWait = 1000, // Wait between typing and backspacing
-          speedBetweenLines = 1000, //Wait between first and second lines
-          element = $("#output"),
-          eHeader = element.children("h1"), //Header element
-          eParagraph = element.children("p"); //Subheader element
-      eHeader.text('');
-      eParagraph.text('');
-      //Run the loop
-      innerTypeWriter(targetString);
-      function innerTypeWriter(aString) {
-        // If full string hasn't yet been typed out, continue typing
-        if (i < aString.length) {
-          // If character about to be typed is a pipe, switch to second line and continue.
-          if (aString.charAt(i) == "|") {
-            isParagraph = true;
-            eHeader.removeClass("cursor");
-            eParagraph.addClass("cursor");
-            i++;
-            setTimeout(function(){ innerTypeWriter(aString); }, speedBetweenLines);
-          // If character isn't a pipe, continue typing.
-          } else {
-            // Type header or subheader depending on whether pipe has been detected
-            if (!isParagraph) {
-              eHeader.text(eHeader.text() + aString.charAt(i));
-            } else {
-              eParagraph.text(eParagraph.text() + aString.charAt(i));
+    document.addEventListener('DOMContentLoaded', function() {
+        const downloadButton = document.querySelector('.download-button');
+        const buttonText = document.querySelector('.button-text');
+        const downloadStatus = document.querySelector('.download-status');
+        const progressBar = document.querySelector('.progress-bar');
+        const qualityOptions = document.querySelectorAll('.quality-option');
+
+        let isDownloaded = false;
+        let isDownloading = false;
+        let selectedQuality = 'high';
+
+        qualityOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                if (isDownloading || isDownloaded) return;
+
+                qualityOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                selectedQuality = this.dataset.quality;
+            });
+        });
+
+        downloadButton.addEventListener('click', function() {
+            if (isDownloaded) {
+                // Already downloaded
+                showStatusMessage('Track already available offline', 2000);
+                return;
             }
-            i++;
-            setTimeout(function(){ innerTypeWriter(aString); }, speedForward);
-          }
+
+            if (isDownloading) {
+                // Already in progress
+                return;
+            }
+
+            // Start download simulation
+            isDownloading = true;
+            buttonText.textContent = 'Downloading...';
+            downloadStatus.textContent = 'Starting download...';
+            downloadStatus.classList.add('active');
+
+            // Quality affects download speed (for simulation)
+            let duration = 3000;
+            if (selectedQuality === 'ultra') duration = 5000;
+            if (selectedQuality === 'normal') duration = 2000;
+
+            let progress = 0;
+            const interval = 50;
+            const increment = interval / duration * 100;
+
+            const downloadInterval = setInterval(function() {
+                progress += increment;
+                if (progress >= 100) {
+                    clearInterval(downloadInterval);
+                    completeDownload();
+                } else {
+                    updateProgress(progress);
+                }
+            }, interval);
+        });
+
+        function updateProgress(progress) {
+            progressBar.style.width = `${progress}%`;
+
+            if (progress < 15) {
+                downloadStatus.textContent = 'Starting download...';
+            } else if (progress < 40) {
+                downloadStatus.textContent = `Downloading ${Math.round(progress)}%`;
+            } else if (progress < 75) {
+                downloadStatus.textContent = `Almost there: ${Math.round(progress)}%`;
+            } else {
+                downloadStatus.textContent = `Finalizing: ${Math.round(progress)}%`;
+            }
         }
-      }
-    }
-    function typeWriterClear() {
-      var speedBackspace = 25, //Backspace Speed
-          element = $("#output"),
-          eHeader = element.children("h1"), //Header element
-          eParagraph = element.children("p"); //Subheader element
-      // If either the header or the paragraph still has text, continue backspacing
-      if (eHeader.text().length > 0 || eParagraph.text().length > 0) {
-        // If paragraph still has text, continue erasing, otherwise switch to the header.
-        if (eParagraph.text().length > 0) {
-          eParagraph.text(eParagraph.text().substring(0, eParagraph.text().length - 1));
-        } else if (eHeader.text().length > 0) {
-          eParagraph.removeClass("cursor");
-          eHeader.addClass("cursor");
-          eHeader.text(eHeader.text().substring(0, eHeader.text().length - 1));
+
+        function completeDownload() {
+            isDownloading = false;
+            isDownloaded = true;
+            downloadButton.classList.add('is-downloaded');
+            buttonText.textContent = 'Available Offline';
+
+            // Show completion message
+            showStatusMessage('Track downloaded successfully!', 3000);
+
+            // Update download icon
+            const downloadIcon = document.querySelector('.download-icon svg');
+            downloadIcon.innerHTML = `
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            `;
         }
-        setTimeout(function(){ typeWriterClear(); }, speedBackspace);
-      }
-    }
+
+        function showStatusMessage(message, duration) {
+            downloadStatus.textContent = message;
+            downloadStatus.classList.add('active');
+
+            setTimeout(() => {
+                downloadStatus.classList.remove('active');
+            }, duration);
+        }
+    });
   </script>
 </body>
 </html>
